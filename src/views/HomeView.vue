@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import ContactForm from '@/components/ContactForm.vue'
 import TechStack from '@/components/TechStack.vue'
+import CodeTerminal from '@/components/CodeTerminal.vue'
 
 const codeLines = ref([
   'const developer = {',
@@ -54,16 +55,12 @@ const experience: JobExperience[] = [
           Готов к реализации ваших проектов!
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="primary-button">Начать проект</a>
-          <router-link to="/about" class="secondary-button">Узнать больше</router-link>
+          <a href="#contact" class="primary-button">Написать</a>
+          <router-link to="/about" class="secondary-button">Узнать</router-link>
         </div>
       </div>
       <div class="hero-visual">
-        <div class="floating-code">
-          <div class="code-line" v-for="(line, index) in codeLines" :key="index" :style="`--delay: ${index * 0.2}s`">
-            {{ line }}
-          </div>
-        </div>
+        <CodeTerminal :lines="codeLines" :delay="800" />
       </div>
     </section>
 
@@ -183,26 +180,6 @@ const experience: JobExperience[] = [
   position: relative;
 }
 
-.floating-code {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 1rem;
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-family: 'Fira Code', monospace;
-  overflow: hidden;
-}
-
-.code-line {
-  opacity: 0;
-  transform: translateX(-20px);
-  animation: slideIn 0.6s ease forwards;
-  animation-delay: var(--delay);
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 0.5rem;
-  font-size: 0.9rem;
-}
-
 @keyframes slideIn {
   to {
     opacity: 1;
@@ -319,27 +296,6 @@ const experience: JobExperience[] = [
     justify-content: center;
     flex-wrap: wrap;
   }
-
-  .floating-code {
-    margin-top: 2rem;
-  }
-
-  .timeline::before {
-    left: 20px;
-  }
-
-  .timeline-item {
-    width: 100%;
-    left: 0 !important;
-    padding-left: 50px;
-    padding-right: 0;
-    text-align: left !important;
-  }
-
-  .timeline-item:nth-child(odd) .timeline-dot,
-  .timeline-item:nth-child(even) .timeline-dot {
-    left: 12px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -352,26 +308,9 @@ const experience: JobExperience[] = [
     align-items: center;
   }
 
-  .primary-button,
-  .secondary-button {
+  .primary-button, .secondary-button {
     width: 100%;
     max-width: 250px;
-  }
-
-  .timeline-content {
-    padding: 1rem;
-  }
-
-  .job-title {
-    font-size: 1.1rem;
-  }
-
-  .company {
-    font-size: 0.9rem;
-  }
-
-  .job-description {
-    font-size: 0.9rem;
   }
 }
 </style>
