@@ -1,35 +1,62 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 const scrolled = ref(false)
+const mobileMenuOpen = ref(false)
+const windowWidth = ref(window.innerWidth)
+
+const isMobile = computed(() => windowWidth.value < 768)
 
 const handleScroll = () => {
   scrolled.value = window.scrollY > 50
 }
 
+const handleResize = () => {
+  windowWidth.value = window.innerWidth
+  if (windowWidth.value >= 768) {
+    mobileMenuOpen.value = false
+  }
+}
+
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false
+}
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('resize', handleResize)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 
 <template>
-  <header :class="['header', { 'header-scrolled': scrolled }]">
+  <header :class="['header', { 'header-scrolled': scrolled, 'header-mobile': isMobile }]">
     <div class="header-content">
       <router-link to="/" class="logo">
         <span class="logo-text">K.Mazurek</span>
         <span class="logo-dot"></span>
       </router-link>
 
-      <nav class="nav">
-        <router-link to="/" class="nav-link">Главная</router-link>
-        <router-link to="/about" class="nav-link">Обо мне</router-link>
+      <button class="mobile-menu-button" @click="toggleMobileMenu" v-if="isMobile">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav :class="['nav', { 'nav-open': mobileMenuOpen }]">
+        <router-link to="/" class="nav-link" @click="closeMobileMenu">Главная</router-link>
+        <router-link to="/about" class="nav-link" @click="closeMobileMenu">Обо мне</router-link>
       </nav>
 
-      <div class="header-actions">
+      <div class="header-actions" v-if="!isMobile">
         <a href="#contact" class="contact-button">Связаться</a>
       </div>
     </div>
@@ -147,5 +174,73 @@ onUnmounted(() => {
 .contact-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+.mobile-menu-button {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.mobile-menu-button span {
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.header-mobile .nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.nav-open {
+  transform: translateX(0) !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: flex;
+  }
+
+  .header-actions {
+    display: none;
+  }
+
+  .header-content {
+    padding: 0 1rem;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 1rem 0;
+  }
+
+  .header-scrolled {
+    padding: 0.8rem 0;
+  }
 }
 </style>

@@ -304,10 +304,24 @@ const experience: JobExperience[] = [
     grid-template-columns: 1fr;
     text-align: center;
     gap: 2rem;
+    padding: 1rem;
   }
 
   .hero-title {
     font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .hero-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .floating-code {
+    margin-top: 2rem;
   }
 
   .timeline::before {
@@ -325,6 +339,39 @@ const experience: JobExperience[] = [
   .timeline-item:nth-child(odd) .timeline-dot,
   .timeline-item:nth-child(even) .timeline-dot {
     left: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .primary-button,
+  .secondary-button {
+    width: 100%;
+    max-width: 250px;
+  }
+
+  .timeline-content {
+    padding: 1rem;
+  }
+
+  .job-title {
+    font-size: 1.1rem;
+  }
+
+  .company {
+    font-size: 0.9rem;
+  }
+
+  .job-description {
+    font-size: 0.9rem;
   }
 }
 </style>
