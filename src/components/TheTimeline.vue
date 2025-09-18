@@ -16,7 +16,7 @@ onMounted(() => {
   <section class="experience-section">
     <div class="container">
       <h2 class="section-title">Опыт работы</h2>
-      <div class="timeline">
+      <div class="container timeline">
         <div v-for="(job, index) in experiences" :key="index" class="timeline-item"
           :class="index % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'">
           <div class="card timeline-content">
@@ -45,8 +45,6 @@ onMounted(() => {
 .timeline {
   position: relative;
   max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem 0;
 }
 
 .timeline::before {

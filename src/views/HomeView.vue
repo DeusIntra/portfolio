@@ -39,7 +39,7 @@ const experiences: JobExperience[] = [
 
 <template>
   <div class="home">
-    <section class="hero">
+    <section class="container hero">
       <div class="hero-content">
         <h1 class="hero-title">
           Привет, я <span class="gradient-text">Кирилл Мазурек</span>
@@ -76,9 +76,6 @@ const experiences: JobExperience[] = [
   gap: 4rem;
   align-items: center;
   min-height: 100vh;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .hero-content {
