@@ -77,20 +77,6 @@ async function handleSubmit() {
   padding: 0 2rem;
 }
 
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  background: linear-gradient(45deg, #6366f1, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-}
-
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;

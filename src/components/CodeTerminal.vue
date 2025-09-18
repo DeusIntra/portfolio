@@ -274,7 +274,6 @@ onMounted(() => {
   }
 }
 
-// Медиазапросы для мобильных устройств
 @media (max-width: 768px) {
   .code-terminal {
     font-size: 12px;

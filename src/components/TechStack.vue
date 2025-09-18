@@ -39,16 +39,6 @@ const technologies: Technology[] = [
   padding: 4rem 0;
 }
 
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  background: linear-gradient(45deg, #6366f1, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 .tech-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -109,10 +99,6 @@ const technologies: Technology[] = [
   .tech-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
-  }
-
-  .section-title {
-    font-size: 2rem;
   }
 }
 </style>

@@ -43,16 +43,6 @@ onMounted(() => {
   padding: 0 2rem;
 }
 
-.section-title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
-  background: linear-gradient(45deg, #6366f1, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 .timeline {
   position: relative;
   max-width: 800px;
@@ -141,13 +131,11 @@ onMounted(() => {
   line-height: 1.6;
 }
 
-// Анимация появления при прокрутке
 .timeline-item.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-// Медиазапросы для мобильных устройств
 @media (max-width: 968px) {
   .timeline::before {
     left: 20px;
@@ -168,10 +156,6 @@ onMounted(() => {
 }
 
 @media (max-width: 480px) {
-  .section-title {
-    font-size: 2rem;
-  }
-
   .timeline-content {
     padding: 1rem;
   }
