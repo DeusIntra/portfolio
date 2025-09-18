@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import ContactForm from '@/components/ContactForm.vue'
 import TechStack from '@/components/TechStack.vue'
 import CodeTerminal from '@/components/CodeTerminal.vue'
 
-const codeLines = ref([
+function yearsSinceBirth(birthday: Date) {
+  const today = new Date();
+  const ageDate = new Date(today.getTime() - birthday.getTime());
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+const codeLines = [
   'const developer = {',
   '  name: "Кирилл Мазурек",',
+  `  age: ${yearsSinceBirth(new Date(1996, 3, 13))},`,
   '  role: "Fullstack Developer",',
-  '  skills: ["Vue", "React", "Node.js", "TypeScript"],',
+  '  skills: ["Vue", "React", "Node.js", "TypeScript", "C#"],',
   '  location: "Тюмень, Россия"',
   '};'
-])
+]
 
 interface JobExperience {
   position: string

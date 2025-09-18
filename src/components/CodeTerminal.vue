@@ -25,7 +25,9 @@ function parseLine(line: string): Token[] {
     { type: 'property', regex: /^(\w+):/ },
     { type: 'punctuation', regex: /^(\{|\}|\[|\]|\(|\)|;|,|=)/ },
     { type: 'identifier', regex: /^(developer|name|role|skills|location)\b/ },
+    // { type: 'number', regex: /^\d*/ },
     { type: 'text', regex: /^\s+/ },
+    { type: 'text', regex: /^./ },
   ]
 
   while (remaining.length > 0) {
@@ -54,39 +56,30 @@ onMounted(() => console.log(tokenizedLines.value))
 </script>
 
 <template>
-  <div class="code-terminal">
-    <div class="terminal-content">
-      <div v-for="(line, lineIndex) in tokenizedLines" :key="lineIndex" class="code-line">
-        <span class="line-number">{{ lineIndex + 1 }}</span>
-        <span v-for="(token, tokenIndex) in line.tokens" :key="tokenIndex" :class="`token-${token.type}`">
-          {{ token.content }}
-        </span>
-      </div>
-      <div class="terminal-prompt">
-        <span class="prompt-cursor"></span>
-      </div>
+  <div class="card code-terminal">
+    <div v-for="(line, lineIndex) in tokenizedLines" :key="lineIndex">
+      <span class="line-number">{{ lineIndex + 1 }}</span>
+      <span v-for="(token, tokenIndex) in line.tokens" :key="tokenIndex" :class="`token-${token.type}`">
+        {{ token.content }}
+      </span>
+    </div>
+    <div class="terminal-prompt">
+      <span class="line-number">{{ tokenizedLines.length + 1 }}</span>
+      <span class="prompt-cursor"></span>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .code-terminal {
-  background: var(--code-bg, #1e1e1e);
-  border-radius: 8px;
-  border: 1px solid var(--code-border, #333);
   font-family: 'Fira Code', monospace;
   font-size: 14px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
 
-.terminal-content {
-  padding: 12px;
-  min-height: 160px;
-}
-
-.code-line {
-  margin-bottom: 4px;
+  div {
+    margin-bottom: 4px;
+  }
 }
 
 .line-number {
@@ -100,8 +93,6 @@ onMounted(() => console.log(tokenizedLines.value))
 
 .terminal-prompt {
   display: flex;
-  align-items: center;
-  margin-top: 8px;
 }
 
 .prompt-cursor {
@@ -124,34 +115,23 @@ onMounted(() => console.log(tokenizedLines.value))
   }
 }
 
-.token-keyword {
-  color: var(--code-keyword, #569cd6);
+$tokenColors: (
+  keyword: #569cd6,
+  string: #ce9178,
+  property: #9cdcfe,
+  punctuation: #d4d4d4,
+  brackets: #d4d4d4,
+  identifier: #4ec9b0,
+  text: #d4d4d4,
+  number: #d4d4d4,
+);
+
+@each $type, $clr in $tokenColors {
+  .token-#{$type} {
+    color: var(--code-#{$type}, #{$clr});
+  }
 }
 
-.token-string {
-  color: var(--code-string, #ce9178);
-}
-
-.token-property {
-  color: var(--code-property, #9cdcfe);
-}
-
-.token-punctuation {
-  color: var(--code-punctuation, #d4d4d4);
-}
-
-.token-identifier {
-  color: var(--code-identifier, #4ec9b0);
-}
-
-.token-technology {
-  color: var(--code-technology, #c586c0);
-  font-weight: 500;
-}
-
-.token-text {
-  color: var(--code-text, #d4d4d4);
-}
 
 /* Медиазапросы для мобильных */
 @media (max-width: 768px) {

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// import { Vue, Nuxt, React, Node, TypeScript, JavaScript, CSharp, PHP, PostgreSQL, Python } from '@/assets/icons';
-
 interface Technology {
   name: string
   icon: string
@@ -25,7 +23,7 @@ const technologies: Technology[] = [
   <div class="tech-stack">
     <h2 class="section-title">Мой стек технологий</h2>
     <div class="tech-grid">
-      <div v-for="(tech, index) in technologies" :key="tech.name" class="tech-card" :style="`--delay: ${index * 0.1}s`">
+      <div v-for="(tech, index) in technologies" :key="tech.name" class="card tech-card" :style="`--delay: ${index * 0.1}s`">
         <div class="tech-icon">
           <img :src="`/svg/${tech.icon.toLowerCase()}_logo.svg`" alt="">
         </div>
@@ -63,11 +61,7 @@ const technologies: Technology[] = [
 .tech-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 2rem;
   text-align: center;
-  background: rgba(255, 255, 255, 0.05);
   opacity: 0;
   transition: all 0.3s ease;
   transform: translateY(20px);
