@@ -38,26 +38,32 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header :class="['header', { 'header-scrolled': scrolled, 'header-mobile': isMobile }]">
-    <div class="header-content">
-      <router-link to="/" class="logo">
-        <span class="logo-text">K.Mazurek</span>
-        <span class="logo-dot"></span>
+  <header :class="['header', { 'header--scrolled': scrolled, 'header--mobile': isMobile }]">
+    <div class="header__content">
+      <router-link to="/" class="header__logo">
+        <span class="header__logo-text">K.Mazurek</span>
+        <span class="header__logo-dot"></span>
       </router-link>
 
-      <button class="mobile-menu-button" @click="toggleMobileMenu" v-if="isMobile">
-        <span></span>
-        <span></span>
-        <span></span>
+      <button
+        class="header__mobile-menu-button"
+        @click="toggleMobileMenu"
+        :class="{'header__mobile-menu-button--active': mobileMenuOpen}"
+        v-if="isMobile"
+        aria-label="Меню"
+      >
+        <span class="header__mobile-menu-line"></span>
+        <span class="header__mobile-menu-line"></span>
+        <span class="header__mobile-menu-line"></span>
       </button>
 
-      <nav :class="['nav', { 'nav-open': mobileMenuOpen }]">
-        <router-link to="/" class="nav-link" @click="closeMobileMenu">Главная</router-link>
-        <router-link to="/about" class="nav-link" @click="closeMobileMenu">Обо мне</router-link>
+      <nav class="header__nav" :class="{'header__nav--open': mobileMenuOpen}">
+        <router-link to="/" class="header__nav-link" @click="closeMobileMenu">Главная</router-link>
+        <router-link to="/about" class="header__nav-link" @click="closeMobileMenu">Обо мне</router-link>
       </nav>
 
-      <div class="header-actions" v-if="!isMobile">
-        <a href="#contact" class="contact-button">Связаться</a>
+      <div class="header__actions" v-if="!isMobile">
+        <a href="#contact" class="header__contact-button">Связаться</a>
       </div>
     </div>
   </header>
@@ -75,22 +81,26 @@ onUnmounted(() => {
   background: transparent;
   backdrop-filter: blur(10px);
 
-  @media (max-width: 480px) {
+  &--scrolled {
+    background: rgba(15, 23, 42, 0.8);
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  &--mobile {
     padding: 1rem 0;
   }
-}
-
-.header-scrolled {
-  background: rgba(15, 23, 42, 0.8);
-  padding: 1rem 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 480px) {
-    padding: 0.8rem 0;
+    padding: 1rem 0;
+
+    &--scrolled {
+      padding: 0.8rem 0;
+    }
   }
 }
 
-.header-content {
+.header__content {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
@@ -101,10 +111,9 @@ onUnmounted(() => {
   @media (max-width: 768px) {
     padding: 0 1rem;
   }
-
 }
 
-.logo {
+.header__logo {
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -114,13 +123,13 @@ onUnmounted(() => {
   position: relative;
 }
 
-.logo-text {
+.header__logo-text {
   @media (max-width: 768px) {
     font-size: 1.2rem;
   }
 }
 
-.logo-dot {
+.header__logo-dot {
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -130,29 +139,16 @@ onUnmounted(() => {
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.5);
-    opacity: 0.7;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-.nav {
+.header__nav {
   display: flex;
   gap: 2rem;
+
+  &--open {
+    transform: translateX(0) !important;
+  }
 }
 
-.nav-link {
+.header__nav-link {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   font-weight: 500;
@@ -177,10 +173,9 @@ onUnmounted(() => {
   &:hover::after {
     width: 100%;
   }
-
 }
 
-.contact-button {
+.header__contact-button {
   background: linear-gradient(45deg, #6366f1, #8b5cf6);
   color: white;
   padding: 0.5rem 1.5rem;
@@ -194,10 +189,9 @@ onUnmounted(() => {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
   }
-
 }
 
-.mobile-menu-button {
+.header__mobile-menu-button {
   display: none;
   flex-direction: column;
   justify-content: space-around;
@@ -209,21 +203,43 @@ onUnmounted(() => {
   padding: 0;
   z-index: 10;
 
+  &--active {
+    .header__mobile-menu-line {
+      &:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      &:nth-child(2) {
+        opacity: 0;
+      }
+
+      &:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+    }
+  }
+
   @media (max-width: 768px) {
     display: flex;
   }
+}
 
-  span {
-    width: 100%;
-    height: 3px;
-    background: white;
-    border-radius: 2px;
-    transition: all 0.3s ease;
+.header__mobile-menu-line {
+  width: 100%;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.header__actions {
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 
-.header-mobile {
-  .nav {
+.header--mobile {
+  .header__nav {
     position: fixed;
     top: 0;
     left: 0;
@@ -239,13 +255,20 @@ onUnmounted(() => {
   }
 }
 
-.nav-open {
-  transform: translateX(0) !important;
-}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
 
-.header-actions {
-  @media (max-width: 768px) {
-    display: none;
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }
 </style>
