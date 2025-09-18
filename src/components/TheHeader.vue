@@ -45,19 +45,14 @@ onUnmounted(() => {
         <span class="header__logo-dot"></span>
       </router-link>
 
-      <button
-        class="header__mobile-menu-button"
-        @click="toggleMobileMenu"
-        :class="{'header__mobile-menu-button--active': mobileMenuOpen}"
-        v-if="isMobile"
-        aria-label="Меню"
-      >
+      <button class="header__mobile-menu-button" @click="toggleMobileMenu"
+        :class="{ 'header__mobile-menu-button--active': mobileMenuOpen }" v-if="isMobile" aria-label="Меню">
         <span class="header__mobile-menu-line"></span>
         <span class="header__mobile-menu-line"></span>
         <span class="header__mobile-menu-line"></span>
       </button>
 
-      <nav class="header__nav" :class="{'header__nav--open': mobileMenuOpen}">
+      <nav class="header__nav" :class="{ 'header__nav--open': mobileMenuOpen }">
         <router-link to="/" class="header__nav-link" @click="closeMobileMenu">Главная</router-link>
         <router-link to="/about" class="header__nav-link" @click="closeMobileMenu">Обо мне</router-link>
       </nav>
@@ -98,143 +93,143 @@ onUnmounted(() => {
       padding: 0.8rem 0;
     }
   }
-}
 
-.header__content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  &__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  @media (max-width: 768px) {
-    padding: 0 1rem;
-  }
-}
-
-.header__logo {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: white;
-  font-weight: 700;
-  font-size: 1.5rem;
-  position: relative;
-}
-
-.header__logo-text {
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
-}
-
-.header__logo-dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(45deg, #6366f1, #8b5cf6);
-  border-radius: 50%;
-  margin-left: 4px;
-  animation: pulse 2s infinite;
-}
-
-.header__nav {
-  display: flex;
-  gap: 2rem;
-
-  &--open {
-    transform: translateX(0) !important;
-  }
-}
-
-.header__nav-link {
-  color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-
-  &:hover {
-    color: white;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(45deg, #6366f1, #8b5cf6);
-    transition: width 0.3s ease;
-  }
-
-  &:hover::after {
-    width: 100%;
-  }
-}
-
-.header__contact-button {
-  background: linear-gradient(45deg, #6366f1, #8b5cf6);
-  color: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-  }
-}
-
-.header__mobile-menu-button {
-  display: none;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 30px;
-  height: 25px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  z-index: 10;
-
-  &--active {
-    .header__mobile-menu-line {
-      &:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-      }
-
-      &:nth-child(2) {
-        opacity: 0;
-      }
-
-      &:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
-      }
+    @media (max-width: 768px) {
+      padding: 0 1rem;
     }
   }
 
-  @media (max-width: 768px) {
+  &__logo {
     display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    position: relative;
   }
-}
 
-.header__mobile-menu-line {
-  width: 100%;
-  height: 3px;
-  background: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
+  &__logo-text {
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
 
-.header__actions {
-  @media (max-width: 768px) {
+  &__logo-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(45deg, #6366f1, #8b5cf6);
+    border-radius: 50%;
+    margin-left: 4px;
+    animation: pulse 2s infinite;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 2rem;
+
+    &--open {
+      transform: translateX(0) !important;
+    }
+  }
+
+  &__nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      color: white;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(45deg, #6366f1, #8b5cf6);
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+
+  &__contact-button {
+    background: linear-gradient(45deg, #6366f1, #8b5cf6);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+    }
+  }
+
+  &__mobile-menu-button {
     display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10;
+
+    &--active {
+      .header__mobile-menu-line {
+        &:nth-child(1) {
+          transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        &:nth-child(2) {
+          opacity: 0;
+        }
+
+        &:nth-child(3) {
+          transform: rotate(-45deg) translate(7px, -6px);
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+  }
+
+  &__mobile-menu-line {
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  &__actions {
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }
 
