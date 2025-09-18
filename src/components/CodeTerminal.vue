@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 
+
 interface Token {
   type: string
   content: string
@@ -22,17 +23,10 @@ type TokenPattern = {
   regex: RegExp
 }
 
-
 const props = defineProps({
   lines: { type: Array<string>, required: true },
   delay: { type: Number, default: 0 },
   typingSpeed: { type: Number, default: 50 },
-})
-
-const showCursor = computed(() => {
-  return !isTypingComplete.value &&
-    currentLineIndex.value < animatedLines.value.length &&
-    currentTokenIndex.value < animatedLines.value[currentLineIndex.value].tokens.length
 })
 
 const isVisible = ref(false);
@@ -42,6 +36,11 @@ const currentLineIndex = ref(0)
 const currentTokenIndex = ref(0)
 const currentCharIndex = ref(0)
 
+const showCursor = computed(() => {
+  return !isTypingComplete.value &&
+    currentLineIndex.value < animatedLines.value.length &&
+    currentTokenIndex.value < animatedLines.value[currentLineIndex.value].tokens.length
+})
 
 function parseLine(line: string): Token[] {
   const tokens: Token[] = []

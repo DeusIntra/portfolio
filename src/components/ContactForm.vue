@@ -35,7 +35,6 @@ async function handleSubmit() {
     }, 5000)
   }
 }
-
 </script>
 
 <template>

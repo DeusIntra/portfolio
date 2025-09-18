@@ -7,22 +7,22 @@ const windowWidth = ref(window.innerWidth)
 
 const isMobile = computed(() => windowWidth.value < 768)
 
-const handleScroll = () => {
+function handleScroll() {
   scrolled.value = window.scrollY > 50
 }
 
-const handleResize = () => {
+function handleResize() {
   windowWidth.value = window.innerWidth
   if (windowWidth.value >= 768) {
     mobileMenuOpen.value = false
   }
 }
 
-const toggleMobileMenu = () => {
+function toggleMobileMenu() {
   mobileMenuOpen.value = !mobileMenuOpen.value
 }
 
-const closeMobileMenu = () => {
+function closeMobileMenu() {
   mobileMenuOpen.value = false
 }
 
@@ -63,7 +63,7 @@ onUnmounted(() => {
   </header>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .header {
   position: fixed;
   top: 0;
@@ -74,12 +74,20 @@ onUnmounted(() => {
   transition: all 0.3s ease;
   background: transparent;
   backdrop-filter: blur(10px);
+
+  @media (max-width: 480px) {
+    padding: 1rem 0;
+  }
 }
 
 .header-scrolled {
   background: rgba(15, 23, 42, 0.8);
   padding: 1rem 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 480px) {
+    padding: 0.8rem 0;
+  }
 }
 
 .header-content {
@@ -89,6 +97,11 @@ onUnmounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
+
 }
 
 .logo {
@@ -99,6 +112,12 @@ onUnmounted(() => {
   font-weight: 700;
   font-size: 1.5rem;
   position: relative;
+}
+
+.logo-text {
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 }
 
 .logo-dot {
@@ -139,25 +158,26 @@ onUnmounted(() => {
   font-weight: 500;
   transition: all 0.3s ease;
   position: relative;
-}
 
-.nav-link:hover {
-  color: white;
-}
+  &:hover {
+    color: white;
+  }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(45deg, #6366f1, #8b5cf6);
-  transition: width 0.3s ease;
-}
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(45deg, #6366f1, #8b5cf6);
+    transition: width 0.3s ease;
+  }
 
-.nav-link:hover::after {
-  width: 100%;
+  &:hover::after {
+    width: 100%;
+  }
+
 }
 
 .contact-button {
@@ -169,11 +189,12 @@ onUnmounted(() => {
   font-weight: 500;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-}
 
-.contact-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  }
+
 }
 
 .mobile-menu-button {
@@ -187,60 +208,44 @@ onUnmounted(() => {
   cursor: pointer;
   padding: 0;
   z-index: 10;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+
+  span {
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
 }
 
-.mobile-menu-button span {
-  width: 100%;
-  height: 3px;
-  background: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-
-.header-mobile .nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(15, 23, 42, 0.95);
-  backdrop-filter: blur(10px);
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
+.header-mobile {
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
 }
 
 .nav-open {
   transform: translateX(0) !important;
 }
 
-@media (max-width: 768px) {
-  .mobile-menu-button {
-    display: flex;
-  }
-
-  .header-actions {
+.header-actions {
+  @media (max-width: 768px) {
     display: none;
-  }
-
-  .header-content {
-    padding: 0 1rem;
-  }
-
-  .logo-text {
-    font-size: 1.2rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .header {
-    padding: 1rem 0;
-  }
-
-  .header-scrolled {
-    padding: 0.8rem 0;
   }
 }
 </style>
