@@ -159,9 +159,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="card code-terminal" :class="{ 'visible': isVisible }">
-    <div v-for="(line, lineIndex) in animatedLines" :key="lineIndex" class="code-line">
-      <span class="line-number">
+  <div class="card code-terminal" :class="{ 'code-terminal--visible': isVisible }">
+    <div v-for="(line, lineIndex) in animatedLines" :key="lineIndex" class="code-terminal__line">
+      <span class="code-terminal__line-number">
         {{
           line.tokens.some((t: AnimatedToken) =>
             t.animatedContent.length > 0) || lineIndex === 0 ?
@@ -169,18 +169,19 @@ onMounted(() => {
         }}
       </span>
       <div>
-        <span v-for="(token, tokenIndex) in line.tokens" :key="tokenIndex" :class="`token-${token.type}`">
+        <span v-for="(token, tokenIndex) in line.tokens" :key="tokenIndex"
+          :class="`code-terminal__token code-terminal__token--${token.type}`">
           <span v-if="token.isVisible">{{ token.content }}</span>
           <span v-else>{{ token.animatedContent }}</span>
 
           <span v-if="showCursor && lineIndex === currentLineIndex && tokenIndex === currentTokenIndex"
-            class="cursor typing-cursor"></span>
+            class="code-terminal__cursor code-terminal__cursor--typing"></span>
         </span>
       </div>
     </div>
-    <div v-if="isTypingComplete" class="terminal-prompt">
-      <span class="line-number">{{ animatedLines.length + 1 }}</span>
-      <span class="cursor prompt-cursor"></span>
+    <div v-if="isTypingComplete" class="code-terminal__prompt">
+      <span class="code-terminal__line-number">{{ animatedLines.length + 1 }}</span>
+      <span class="code-terminal__cursor code-terminal__cursor--prompt"></span>
     </div>
   </div>
 </template>
@@ -194,92 +195,69 @@ onMounted(() => {
   transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 
-
-  @media (max-width: 768px) {
-    font-size: 12px;
-    padding: 12px;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 11px;
-    padding: 8px;
-  }
-
-  &.visible {
+  &--visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  .code-line {
+  &__line {
     margin-bottom: 4px;
     display: flex;
     align-items: flex-start;
     min-height: 1.1rem;
     position: relative;
-  }
-}
-
-.line-number {
-  color: var(--code-line-number, #6e7681);
-  margin-right: 12px;
-  margin-top: 4px;
-  user-select: none;
-  min-width: 24px;
-  text-align: right;
-  font-size: 12px;
-  flex-shrink: 0;
-
-  @media (max-width: 768px) {
-    min-width: 20px;
-    margin-right: 8px;
-    margin-top: 0;
+    padding: 0 12px;
   }
 
-  @media (max-width: 480px) {
-    min-width: 18px;
-    margin-right: 6px;
-    font-size: 10px;
-    margin-top: 1px;
-  }
-}
-
-.cursor {
-  width: 0.6em;
-  height: 1.1em;
-  background: var(--code-cursor, #569cd6);
-  vertical-align: text-top;
-  margin-left: -1px;
-  margin-top: 2px;
-
-  &.typing-cursor {
-    display: inline-block;
+  &__line-number {
+    color: var(--code-line-number, #6e7681);
+    margin-right: 12px;
+    margin-top: 4px;
+    user-select: none;
+    min-width: 24px;
+    text-align: right;
+    font-size: 12px;
+    flex-shrink: 0;
   }
 
-  &.prompt-cursor {
-    animation: blink 1s infinite;
+  &__cursor {
+    width: 0.6em;
+    height: 1.1em;
+    background: var(--code-cursor, #569cd6);
+    vertical-align: text-top;
+    margin-left: -1px;
+    margin-top: 2px;
+
+    &--typing {
+      display: inline-block;
+    }
+
+    &--prompt {
+      animation: blink 1s infinite;
+    }
   }
-}
 
+  &__prompt {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+  }
 
-.terminal-prompt {
-  display: flex;
-  align-items: center;
-}
+  $tokenColors: (
+    keyword: #569cd6,
+    string: #ce9178,
+    property: #9cdcfe,
+    punctuation: #d4d4d4,
+    brackets: #d4d4d4,
+    identifier: #4ec9b0,
+    text: #d4d4d4,
+    number: #d4d4d4,
+  );
 
-$tokenColors: (
-  keyword: #569cd6,
-  string: #ce9178,
-  property: #9cdcfe,
-  punctuation: #d4d4d4,
-  brackets: #d4d4d4,
-  identifier: #4ec9b0,
-  text: #d4d4d4,
-  number: #d4d4d4,
-);
-
-@each $type, $clr in $tokenColors {
-  .token-#{$type} {
-    color: var(--code-#{$type}, #{$clr});
+  @each $type, $clr in $tokenColors {
+    &__token--#{$type} {
+      color: var(--code-#{$type}, #{$clr});
+    }
   }
 }
 
@@ -293,6 +271,38 @@ $tokenColors: (
   51%,
   100% {
     opacity: 0;
+  }
+}
+
+// Медиазапросы для мобильных устройств
+@media (max-width: 768px) {
+  .code-terminal {
+    font-size: 12px;
+
+    &__line {
+      padding: 0 10px;
+    }
+
+    &__line-number {
+      min-width: 20px;
+      margin-right: 8px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .code-terminal {
+    font-size: 11px;
+
+    &__line {
+      padding: 0 8px;
+    }
+
+    &__line-number {
+      min-width: 18px;
+      margin-right: 6px;
+      font-size: 10px;
+    }
   }
 }
 </style>
