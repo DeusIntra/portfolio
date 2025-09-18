@@ -15,31 +15,53 @@ const props = defineProps({
   delay: { type: Number, default: 0 },
 })
 
+type TokenPattern = {
+  groups: string | Array<{type: string, group: number}>,
+  regex: RegExp
+}
 function parseLine(line: string): Token[] {
   const tokens: Token[] = []
   let remaining = line
 
-  const patterns = [
-    { type: 'keyword', regex: /^(const|let|var|function|return|if|else|for|while|switch|case|break|default)\b/ },
-    { type: 'string', regex: /^("[^"]*"|'[^']*')/ },
-    { type: 'property', regex: /^(\w+):/ },
-    { type: 'punctuation', regex: /^(\{|\}|\[|\]|\(|\)|;|,|=)/ },
-    { type: 'identifier', regex: /^(developer|name|role|skills|location)\b/ },
-    // { type: 'number', regex: /^\d*/ },
-    { type: 'text', regex: /^\s+/ },
-    { type: 'text', regex: /^./ },
+  const patterns: TokenPattern[] = [
+    {
+      groups: [{ type: 'keyword', group: 1 }, { type: 'text', group: 2 }, { type: 'identifier', group: 3 }], regex: /^(const|let|var)(\s+)(.*)\b/ },
+    { groups: 'keyword', regex: /^(function|return|if|else|for|while|switch|case|break|default)\b/ },
+    { groups: 'string', regex: /^("[^"]*"|'[^']*')/ },
+    { groups: 'property', regex: /^(\w+):/ },
+    { groups: 'punctuation', regex: /^(\{|\}|\[|\]|\(|\)|;|,|=)/ },
+    { groups: 'number', regex: /^\d+(\.\d+)?/ },
+    { groups: 'text', regex: /^\s+/ },
+    { groups: 'text', regex: /^./ },
   ]
 
   while (remaining.length > 0) {
-
+    let matched = false
     for (const pattern of patterns) {
       const match = remaining.match(pattern.regex)
+
       if (match) {
-        const content = match[0]
-        tokens.push({ type: pattern.type, content: content.replace(/ /g, '\u00a0') })
-        remaining = remaining.slice(content.length)
+        if (typeof (pattern.groups) === 'string') {
+          const content = match[0]
+          tokens.push({ type: pattern.groups, content: content.replace(/ /g, '\u00a0') })
+          matched = true
+          remaining = remaining.slice(content.length)
+        }
+        else {
+          for (const t of pattern.groups) {
+            tokens.push({ type: t.type, content: match[t.group].replace(/ /g, '\u00a0') })
+          }
+          remaining = remaining.slice(match[0].length)
+        }
         break
       }
+
+
+    }
+    // Защита от бесконечного цикла
+    if (!matched) {
+      tokens.push({ type: 'text', content: remaining[0] })
+      remaining = remaining.slice(1)
     }
 
   }
