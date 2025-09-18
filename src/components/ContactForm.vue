@@ -42,7 +42,7 @@ async function handleSubmit() {
     <div class="container">
       <h2 class="section-title">Свяжитесь со мной</h2>
       <form class="card" @submit.prevent="handleSubmit">
-        <div class="form-row">
+        <div class="contact-section__form-row">
           <div>
             <label for="name">Имя *</label>
             <input id="name" v-model="form.name" type="text" required placeholder="Ваше имя">
@@ -69,22 +69,19 @@ async function handleSubmit() {
 .contact-section {
   padding: 4rem 0;
   background: rgba(15, 23, 42, 0.5);
+  max-width: 800px;
 
-  .container {
-    max-width: 800px;
+  &__form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
   }
-}
 
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
 }
 
 label {
