@@ -2,43 +2,36 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
-    - name: Checkout 🛎️
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-    - name: Setup Node.js ⚙️
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '22'
+        node-version: '18'
         cache: 'npm'
 
-    - name: Install dependencies 📦
+    - name: Install dependencies
       run: npm ci
 
-    - name: Build 🔧
+    - name: Build
       run: npm run build
       # env:
       #   VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
       #   VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
       #   VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
 
-    - name: Create .nojekyll
-      run: touch dist/.nojekyll
-
-    - name: Deploy to GitHub Pages 🚀
+    - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        personal_token: ${{ secrets.GH_PAT }}
+        external_repository: DeusIntra/DeusIntra.github.io
         publish_dir: ./dist
-        # cname: your-domain.com
+        publish_branch: main
+        keep_files: false
 
