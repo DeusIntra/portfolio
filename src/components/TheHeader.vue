@@ -39,7 +39,7 @@ onUnmounted(() => {
 
 <template>
   <header :class="['header', { 'header--scrolled': scrolled, 'header--mobile': isMobile }]">
-    <div class="header__content">
+    <div class="container header__content">
       <router-link to="/" class="header__logo">
         <span class="header__logo-text">K.Mazurek</span>
         <span class="header__logo-dot"></span>
@@ -96,8 +96,6 @@ onUnmounted(() => {
 
   &__content {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

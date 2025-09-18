@@ -22,7 +22,7 @@ const technologies: Technology[] = [
 <template>
   <div class="tech-stack">
     <h2 class="section-title">Мой стек технологий</h2>
-    <div class="tech-grid">
+    <div class="container tech-grid">
       <div v-for="(tech, index) in technologies" :key="tech.name" class="card tech-card" :style="`--delay: ${index * 0.1}s`">
         <div class="tech-icon">
           <img :src="`/svg/${tech.icon.toLowerCase()}_logo.svg`" alt="">
@@ -43,9 +43,6 @@ const technologies: Technology[] = [
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
 }
 
 .tech-card {

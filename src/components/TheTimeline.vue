@@ -19,7 +19,7 @@ onMounted(() => {
       <div class="timeline">
         <div v-for="(job, index) in experiences" :key="index" class="timeline-item"
           :class="index % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'">
-          <div class="timeline-content">
+          <div class="card timeline-content">
             <h3 class="job-title">{{ job.position }}</h3>
             <p class="company">{{ job.company }} • {{ job.period }}</p>
             <p class="job-description">{{ job.description }}</p>
@@ -35,13 +35,12 @@ onMounted(() => {
 .experience-section {
   padding: 4rem 0;
   background: rgba(15, 23, 42, 0.3);
+
+  .container {
+    max-width: 1200px;
+  }
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
 
 .timeline {
   position: relative;
@@ -89,11 +88,8 @@ onMounted(() => {
 }
 
 .timeline-content {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
   padding: 1.5rem;
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
