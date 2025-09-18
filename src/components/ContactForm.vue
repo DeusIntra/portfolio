@@ -1,19 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import emailjs from '@emailjs/browser'
-import config from '@/config'
 
 
-const { publicKey, serviceId, templateId } = config.emailjs
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
 
-interface FormInputs {
-  name: string
-  email: string
-  subject: string
-  message: string
-}
-
-const form = ref<FormInputs>({
+const form = ref({
   name: '',
   email: '',
   subject: '',
