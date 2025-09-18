@@ -26,11 +26,14 @@ function parseLine(line: string): Token[] {
 
   const patterns: TokenPattern[] = [
     {
-      groups: [{ type: 'keyword', name: 1 }, { type: 'text', name: 2 }, { type: 'identifier', name: 3 }], regex: /^(const|let|var)(\s+)(.*)\b/ },
+      groups: [{ type: 'keyword', name: 1 }, { type: 'text', name: 2 }, { type: 'identifier', name: 3 }],
+      regex: /^(const|let|var)(\s+)(.*)\b/
+    },
     { groups: 'keyword', regex: /^(function|return|if|else|for|while|switch|case|break|default)\b/ },
     { groups: 'string', regex: /^("[^"]*"|'[^']*')/ },
     { groups: 'property', regex: /^(\w+):/ },
-    { groups: 'punctuation', regex: /^(\{|\}|\[|\]|\(|\)|;|,|=)/ },
+    { groups: 'punctuation', regex: /^(\(|\)|;|,|=)/ },
+    { groups: 'brackets', regex: /^(\{|\}|\[|\])/ },
     { groups: 'number', regex: /^\d+(\.\d+)?/ },
     { groups: 'text', regex: /^\s+/ },
     { groups: 'text', regex: /^./ },
