@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 
 interface Token {
   type: string
@@ -15,8 +15,9 @@ const props = defineProps({
   delay: { type: Number, default: 0 },
 })
 
+type RegExGroup = {type: string, name: number}
 type TokenPattern = {
-  groups: string | Array<{type: string, group: number}>,
+  groups: string | RegExGroup[],
   regex: RegExp
 }
 function parseLine(line: string): Token[] {
@@ -25,7 +26,7 @@ function parseLine(line: string): Token[] {
 
   const patterns: TokenPattern[] = [
     {
-      groups: [{ type: 'keyword', group: 1 }, { type: 'text', group: 2 }, { type: 'identifier', group: 3 }], regex: /^(const|let|var)(\s+)(.*)\b/ },
+      groups: [{ type: 'keyword', name: 1 }, { type: 'text', name: 2 }, { type: 'identifier', name: 3 }], regex: /^(const|let|var)(\s+)(.*)\b/ },
     { groups: 'keyword', regex: /^(function|return|if|else|for|while|switch|case|break|default)\b/ },
     { groups: 'string', regex: /^("[^"]*"|'[^']*')/ },
     { groups: 'property', regex: /^(\w+):/ },
@@ -41,24 +42,18 @@ function parseLine(line: string): Token[] {
       const match = remaining.match(pattern.regex)
 
       if (match) {
-        if (typeof (pattern.groups) === 'string') {
-          const content = match[0]
-          tokens.push({ type: pattern.groups, content: content.replace(/ /g, '\u00a0') })
-          matched = true
-          remaining = remaining.slice(content.length)
+        const groups: RegExGroup[] = typeof (pattern.groups) === 'string' ?
+          [{type: pattern.groups, name: 0}] : pattern.groups
+        const fullContent = match[0]
+        for (const group of groups) {
+            tokens.push({ type: group.type, content: match[group.name].replace(/ /g, '\u00a0') })
         }
-        else {
-          for (const t of pattern.groups) {
-            tokens.push({ type: t.type, content: match[t.group].replace(/ /g, '\u00a0') })
-          }
-          remaining = remaining.slice(match[0].length)
-        }
+        matched = true
+        remaining = remaining.slice(fullContent.length)
         break
       }
-
-
     }
-    // Защита от бесконечного цикла
+
     if (!matched) {
       tokens.push({ type: 'text', content: remaining[0] })
       remaining = remaining.slice(1)
@@ -74,7 +69,6 @@ const tokenizedLines = computed((): TokenLine[] => {
   }))
 })
 
-onMounted(() => console.log(tokenizedLines.value))
 </script>
 
 <template>
