@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 
 interface Token {
   type: string
@@ -16,20 +16,32 @@ interface TokenLine {
   isComplete: boolean
 }
 
+type RegExGroup = { type: string, name: number }
+type TokenPattern = {
+  groups: string | RegExGroup[],
+  regex: RegExp
+}
+
+
 const props = defineProps({
   lines: { type: Array<string>, required: true },
   delay: { type: Number, default: 0 },
   typingSpeed: { type: Number, default: 50 },
 })
 
+const showCursor = computed(() => {
+  return !isTypingComplete.value &&
+    currentLineIndex.value < animatedLines.value.length &&
+    currentTokenIndex.value < animatedLines.value[currentLineIndex.value].tokens.length
+})
+
+const isVisible = ref(false);
 const animatedLines = ref<TokenLine[]>([])
 const isTypingComplete = ref(false)
+const currentLineIndex = ref(0)
+const currentTokenIndex = ref(0)
+const currentCharIndex = ref(0)
 
-type RegExGroup = {type: string, name: number}
-type TokenPattern = {
-  groups: string | RegExGroup[],
-  regex: RegExp
-}
 
 function parseLine(line: string): Token[] {
   const tokens: Token[] = []
@@ -64,10 +76,10 @@ function parseLine(line: string): Token[] {
 
       if (match) {
         const groups: RegExGroup[] = typeof (pattern.groups) === 'string' ?
-          [{type: pattern.groups, name: 0}] : pattern.groups
+          [{ type: pattern.groups, name: 0 }] : pattern.groups
         const fullContent = match[0]
         for (const group of groups) {
-            tokens.push({ type: group.type, content: match[group.name].replace(/ /g, '\u00a0') })
+          tokens.push({ type: group.type, content: match[group.name] })
         }
         matched = true
         remaining = remaining.slice(fullContent.length)
@@ -80,10 +92,15 @@ function parseLine(line: string): Token[] {
       remaining = remaining.slice(1)
     }
   }
+  if (tokens.length > 0) {
+    const match = tokens[0].content.match(/^\s+/)
+    if (match) {
+      tokens[0].content = tokens[0].content.replace(/\s/g, '\u00a0')
+    }
+  }
   return tokens
 }
 
-// Инициализация анимированных строк
 function initializeAnimatedLines() {
   animatedLines.value = props.lines.map(line => ({
     tokens: parseLine(line).map(token => ({
@@ -96,39 +113,32 @@ function initializeAnimatedLines() {
   isTypingComplete.value = false
 }
 
-// Запуск анимации печатания
-const startTypingAnimation = () => {
-  let currentLineIndex = 0
-  let currentTokenIndex = 0
-  let currentCharIndex = 0
-
+function startTypingAnimation() {
   const typeNextCharacter = () => {
-    if (currentLineIndex >= animatedLines.value.length) {
+    if (currentLineIndex.value >= animatedLines.value.length) {
       isTypingComplete.value = true
       return
     }
 
-    const currentLine = animatedLines.value[currentLineIndex]
-    const currentToken = currentLine.tokens[currentTokenIndex]
+    const currentLine = animatedLines.value[currentLineIndex.value]
+    const currentToken = currentLine.tokens[currentTokenIndex.value]
 
-    if (currentCharIndex < currentToken.content.length) {
-      // Печатаем следующий символ
-      currentToken.animatedContent += currentToken.content[currentCharIndex]
-      currentCharIndex++
+    if (currentCharIndex.value < currentToken.content.length) {
+      currentToken.animatedContent += currentToken.content[currentCharIndex.value]
+      currentCharIndex.value++
     } else {
-      // Переходим к следующему токену
       currentToken.isVisible = true
-      currentTokenIndex++
-      currentCharIndex = 0
+      currentTokenIndex.value++
+      currentCharIndex.value = 0
 
-      if (currentTokenIndex >= currentLine.tokens.length) {
+      if (currentTokenIndex.value >= currentLine.tokens.length) {
         currentLine.isComplete = true
-        currentLineIndex++
-        currentTokenIndex = 0
+        currentLineIndex.value++
+        currentTokenIndex.value = 0
       }
     }
 
-    if (currentLineIndex < animatedLines.value.length) {
+    if (currentLineIndex.value < animatedLines.value.length) {
       setTimeout(typeNextCharacter, props.typingSpeed)
     } else {
       isTypingComplete.value = true
@@ -138,31 +148,40 @@ const startTypingAnimation = () => {
   setTimeout(typeNextCharacter, props.delay)
 }
 
+
 onMounted(() => {
-  initializeAnimatedLines()
-  startTypingAnimation()
+  setTimeout(() => {
+    isVisible.value = true
+    initializeAnimatedLines()
+    startTypingAnimation()
+  }, props.delay)
 })
 
 </script>
 
 <template>
-  <div class="card code-terminal">
+  <div class="card code-terminal" :class="{ 'visible': isVisible }">
     <div v-for="(line, lineIndex) in animatedLines" :key="lineIndex" class="code-line">
-      <template
-        v-for="(token, tokenIndex) in line.tokens"
-        :key="tokenIndex"
-      >
-        <span v-if="tokenIndex === 0" class="line-number">
-          {{ token.isVisible || lineIndex === 0 ? lineIndex + 1 : '' }}
+      <span class="line-number">
+        {{
+          line.tokens.some((t: AnimatedToken) =>
+            t.animatedContent.length > 0) || lineIndex === 0 ?
+            lineIndex + 1 : ''
+        }}
+      </span>
+      <div>
+        <span v-for="(token, tokenIndex) in line.tokens" :key="tokenIndex" :class="`token-${token.type}`">
+          <span v-if="token.isVisible">{{ token.content }}</span>
+          <span v-else>{{ token.animatedContent }}</span>
+
+          <span v-if="showCursor && lineIndex === currentLineIndex && tokenIndex === currentTokenIndex"
+            class="cursor typing-cursor"></span>
         </span>
-        <span :class="`token-${token.type}`">
-          {{ token.isVisible ? token.content : token.animatedContent }}
-        </span>
-      </template>
+      </div>
     </div>
     <div v-if="isTypingComplete" class="terminal-prompt">
       <span class="line-number">{{ animatedLines.length + 1 }}</span>
-      <span class="prompt-cursor"></span>
+      <span class="cursor prompt-cursor"></span>
     </div>
   </div>
 </template>
@@ -170,16 +189,34 @@ onMounted(() => {
 <style scoped lang="scss">
 .code-terminal {
   font-family: 'Fira Code', monospace;
-  font-size: 1rem;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    padding: 12px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 11px;
+    padding: 8px;
+  }
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   .code-line {
     margin-bottom: 4px;
     display: flex;
-    align-items: center;
-    height: 1.1rem;
+    align-items: flex-start;
+    min-height: 1.1rem;
+    position: relative;
   }
 }
 
@@ -191,27 +228,43 @@ onMounted(() => {
   min-width: 24px;
   text-align: right;
   font-size: 12px;
+  flex-shrink: 0;
+
+  @media (max-width: 768px) {
+    min-width: 20px;
+    margin-right: 8px;
+    margin-top: 0;
+  }
+
+  @media (max-width: 480px) {
+    min-width: 18px;
+    margin-right: 6px;
+    font-size: 10px;
+    margin-top: 1px;
+  }
 }
+
+.cursor {
+  width: 0.6em;
+  height: 1.1em;
+  background: var(--code-cursor, #569cd6);
+  vertical-align: text-top;
+  margin-left: -1px;
+  margin-top: 2px;
+
+  &.typing-cursor {
+    display: inline-block;
+  }
+
+  &.prompt-cursor {
+    animation: blink 1s infinite;
+  }
+}
+
 
 .terminal-prompt {
   display: flex;
-}
-
-.prompt-cursor {
-  width: 8px;
-  height: 1.1rem;
-  align-self: center;
-  background: var(--code-cursor, #569cd6);
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0%, 50% {
-    opacity: 1;
-  }
-  51%, 100% {
-    opacity: 0;
-  }
+  align-items: center;
 }
 
 $tokenColors: (
@@ -231,29 +284,16 @@ $tokenColors: (
   }
 }
 
-/* Медиазапросы для мобильных */
-@media (max-width: 768px) {
-  .code-terminal {
-    font-size: 12px;
-    padding: 12px;
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
   }
 
-  .line-number {
-    min-width: 20px;
-    margin-right: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .code-terminal {
-    font-size: 11px;
-    padding: 8px;
-  }
-
-  .line-number {
-    min-width: 18px;
-    margin-right: 6px;
-    font-size: 10px;
+  51%,
+  100% {
+    opacity: 0;
   }
 }
 </style>
