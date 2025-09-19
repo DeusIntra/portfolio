@@ -7,24 +7,28 @@ defineProps({
 })
 
 onMounted(() => {
-  const items = document.querySelectorAll<HTMLElement>('.timeline-item')
+  const items = document.querySelectorAll<HTMLElement>('.timeline__item')
   items.forEach(item => item.style = 'opacity:1;')
 })
 </script>
 
 <template>
-  <section class="experience-section">
+  <section class="timeline">
     <div class="container">
       <h2 class="section-title">Опыт работы</h2>
-      <div class="container timeline">
-        <div v-for="(job, index) in experiences" :key="index" class="timeline-item"
-          :class="index % 2 === 0 ? 'timeline-item-left' : 'timeline-item-right'">
-          <div class="card timeline-content">
-            <h3 class="job-title">{{ job.position }}</h3>
-            <p class="company">{{ job.company }} • {{ job.period }}</p>
-            <p class="job-description">{{ job.description }}</p>
+      <div class="container timeline__container">
+        <div
+          v-for="(job, index) in experiences"
+          :key="index"
+          class="timeline__item"
+          :class="index % 2 === 0 ? 'timeline__item--left' : 'timeline__item--right'"
+        >
+          <div class="card timeline__content">
+            <h3 class="timeline__job-title">{{ job.position }}</h3>
+            <p class="timeline__company">{{ job.company }} • {{ job.period }}</p>
+            <p class="timeline__description">{{ job.description }}</p>
           </div>
-          <div class="timeline-dot"></div>
+          <div class="timeline__dot"></div>
         </div>
       </div>
     </div>
@@ -32,7 +36,7 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-.experience-section {
+.timeline {
   padding: 4rem 0;
   background: rgba(15, 23, 42, 0.3);
 
@@ -41,13 +45,12 @@ onMounted(() => {
   }
 }
 
-
-.timeline {
+.timeline__container {
   position: relative;
   max-width: 800px;
 }
 
-.timeline::before {
+.timeline__container::before {
   content: '';
   position: absolute;
   left: 50%;
@@ -57,7 +60,7 @@ onMounted(() => {
   background: linear-gradient(45deg, #6366f1, #8b5cf6);
 }
 
-.timeline-item {
+.timeline__item {
   position: relative;
   margin-bottom: 3rem;
   width: 50%;
@@ -68,36 +71,36 @@ onMounted(() => {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.timeline-item-left {
+.timeline__item--left {
   left: 0;
   text-align: right;
 
-  .timeline-dot {
+  .timeline__dot {
     right: -8px;
   }
 }
 
-.timeline-item-right {
+.timeline__item--right {
   left: 50%;
 
-  .timeline-dot {
+  .timeline__dot {
     left: -8px;
   }
 }
 
-.timeline-content {
+.timeline__content {
   padding: 1.5rem;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
-.timeline-content:hover {
+.timeline__content:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   background: rgba(255, 255, 255, 0.1);
 }
 
-.timeline-dot {
+.timeline__dot {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -107,35 +110,35 @@ onMounted(() => {
   background: linear-gradient(45deg, #6366f1, #8b5cf6);
 }
 
-.job-title {
+.timeline__job-title {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: white;
 }
 
-.company {
+.timeline__company {
   color: rgba(255, 255, 255, 0.7);
   margin-bottom: 1rem;
   font-size: 0.9rem;
 }
 
-.job-description {
+.timeline__description {
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
 }
 
-.timeline-item.visible {
+.timeline__item.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
 @media (max-width: 968px) {
-  .timeline::before {
+  .timeline__container::before {
     left: 20px;
   }
 
-  .timeline-item {
+  .timeline__item {
     width: 100%;
     left: 0 !important;
     padding-left: 50px;
@@ -143,27 +146,39 @@ onMounted(() => {
     text-align: left !important;
   }
 
-  .timeline-item-left .timeline-dot,
-  .timeline-item-right .timeline-dot {
+  .timeline__item--left .timeline__dot,
+  .timeline__item--right .timeline__dot {
     left: 12px;
   }
 }
 
 @media (max-width: 480px) {
-  .timeline-content {
+  .timeline__content {
     padding: 1rem;
   }
 
-  .job-title {
+  .timeline__job-title {
     font-size: 1.1rem;
   }
 
-  .company {
+  .timeline__company {
     font-size: 0.9rem;
   }
 
-  .job-description {
+  .timeline__description {
     font-size: 0.9rem;
+  }
+
+  .timeline__dot {
+    display: none;
+  }
+
+  .timeline__container::before {
+    content: none;
+  }
+
+  .timeline__item {
+    padding: 0;
   }
 }
 </style>
