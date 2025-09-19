@@ -6,9 +6,22 @@ import ContactForm from '@/components/ContactForm.vue'
 import type { JobExperience } from '@/types/JobExperience'
 import TechStack from '@/components/TechStack.vue'
 
+
+function diffsInYears(date1: Date, date2: Date): number {
+  const ageDifMs = date2.getTime() - date1.getTime();
+  const ageDate = new Date(ageDifMs);
+  return 1970 - ageDate.getUTCFullYear() - 1;
+}
+
+const birthday = new Date(1996, 3, 13)
+function calculateAge(birthday: Date): number {
+  return diffsInYears(new Date(), birthday)
+}
+
 const codeLines = ref([
   'const developer = {',
   '  name: "Кирилл Мазурек",',
+  `  age: ${calculateAge(birthday)},`,
   '  role: "Fullstack Developer",',
   '  skills: ["Vue", "React", "Node.js", "TypeScript"],',
   '  location: "Тюмень, Россия"',
@@ -99,9 +112,17 @@ const experiences: JobExperience[] = [
 }
 
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .hero-subtitle {
@@ -189,7 +210,8 @@ const experiences: JobExperience[] = [
     align-items: center;
   }
 
-  .primary-button, .secondary-button {
+  .primary-button,
+  .secondary-button {
     width: 100%;
     max-width: 250px;
   }
