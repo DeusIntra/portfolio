@@ -22,13 +22,18 @@ const technologies: Technology[] = [
 <template>
   <div class="tech-stack">
     <h2 class="section-title">Мой стек технологий</h2>
-    <div class="container tech-grid">
-      <div v-for="(tech, index) in technologies" :key="tech.name" class="card tech-card" :style="`--delay: ${index * 0.1}s`">
-        <div class="tech-icon">
+    <div class="container tech-stack__grid">
+      <div
+        v-for="(tech, index) in technologies"
+        :key="tech.name"
+        class="card tech-stack__card"
+        :style="`--delay: ${index * 0.1}s`"
+      >
+        <div class="tech-stack__icon">
           <img :src="`/svg/${tech.icon.toLowerCase()}_logo.svg`" alt="">
         </div>
-        <h3 class="tech-name">{{ tech.name }}</h3>
-        <p class="tech-description">{{ tech.description }}</p>
+        <h3 class="tech-stack__name">{{ tech.name }}</h3>
+        <p class="tech-stack__description">{{ tech.description }}</p>
       </div>
     </div>
   </div>
@@ -37,52 +42,58 @@ const technologies: Technology[] = [
 <style scoped lang="scss">
 .tech-stack {
   padding: 4rem 0;
-}
 
-.tech-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-}
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
 
-.tech-card {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  opacity: 0;
-  transition: all 0.3s ease;
-  transform: translateY(20px);
-  animation: fadeInUp 0.6s ease forwards;
-  animation-delay: var(--delay);
-}
-
-.tech-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.tech-icon {
-  flex: 1 0 0;
-  display: flex;
-  margin-bottom: 1rem;
-  color: #6366f1;
-
-  img {
-    max-width: 100%;
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
   }
-}
 
-.tech-name {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: white;
-}
+  &__card {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+    animation-delay: var(--delay);
 
-.tech-description {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &__icon {
+    flex: 1 0 0;
+    display: flex;
+    margin-bottom: 1rem;
+    color: #6366f1;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  &__name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: white;
+  }
+
+  &__description {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+  }
+
 }
 
 @keyframes fadeInUp {
@@ -92,10 +103,4 @@ const technologies: Technology[] = [
   }
 }
 
-@media (max-width: 768px) {
-  .tech-grid {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-  }
-}
 </style>
