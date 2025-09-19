@@ -72,7 +72,9 @@ const experiences: JobExperience[] = [
       </div>
     </section>
 
-    <TechStack />
+    <section class="container">
+      <TechStack />
+    </section>
     <TheTimeline :experiences="experiences" />
     <ContactForm />
   </div>
