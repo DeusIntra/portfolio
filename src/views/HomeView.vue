@@ -63,7 +63,7 @@ const experiences: JobExperience[] = [
           Готов к реализации ваших проектов!
         </p>
         <div class="hero-actions">
-          <a href="#contact" class="primary-button">Начать проект</a>
+          <a href="#contact" class="primary-button">Связаться</a>
           <router-link to="/about" class="secondary-button">Узнать больше</router-link>
         </div>
       </div>
@@ -73,9 +73,15 @@ const experiences: JobExperience[] = [
     </section>
 
     <section class="container">
+      <h2 class="section-title">Мой стек</h2>
       <TechStack />
     </section>
-    <TheTimeline :experiences="experiences" />
+
+    <section class="container">
+      <h2 class="section-title">Опыт работы</h2>
+      <TheTimeline :experiences="experiences" />
+    </section>
+
     <ContactForm />
   </div>
 </template>
@@ -179,7 +185,6 @@ const experiences: JobExperience[] = [
   position: relative;
 }
 
-// Медиазапросы для мобильных устройств
 @media (max-width: 968px) {
   .hero {
     grid-template-columns: 1fr;
