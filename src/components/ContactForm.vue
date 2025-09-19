@@ -38,110 +38,25 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <section id="contact" class="contact-section">
-    <div class="container">
-      <h2 class="section-title">Свяжитесь со мной</h2>
-      <form class="card" @submit.prevent="handleSubmit">
-        <div class="contact-section__form-row">
-          <div>
-            <label for="name">Имя *</label>
-            <input id="name" v-model="form.name" type="text" required placeholder="Ваше имя">
-          </div>
-          <div>
-            <label for="email">Email *</label>
-            <input id="email" v-model="form.email" type="email" required placeholder="your.email@example.com">
-          </div>
-        </div>
-        <label for="subject">Тема *</label>
-        <input id="subject" v-model="form.subject" type="text" required placeholder="Тема сообщения">
-        <label for="message">Сообщение *</label>
-        <textarea id="message" v-model="form.message" rows="5" required placeholder="Ваше сообщение..."></textarea>
-        <button type="submit" class="contact-section__submit-button" :disabled="sendStatus === 'sending'">
-          <span v-if="sendStatus !== 'sending'">Отправить сообщение</span>
-          <span v-else>Отправка...</span>
-        </button>
-      </form>
+  <form class="container card contact-form" @submit.prevent="handleSubmit">
+    <div class="contact-form__form-row">
+      <div>
+        <label for="name">Имя *</label>
+        <input id="name" v-model="form.name" type="text" required placeholder="Ваше имя">
+      </div>
+      <div>
+        <label for="email">Email *</label>
+        <input id="email" v-model="form.email" type="email" required placeholder="your.email@example.com">
+      </div>
     </div>
-  </section>
+    <label for="subject">Тема *</label>
+    <input id="subject" v-model="form.subject" type="text" required placeholder="Тема сообщения">
+    <label for="message">Сообщение *</label>
+    <textarea id="message" v-model="form.message" rows="5" required placeholder="Ваше сообщение..."></textarea>
+    <button type="submit" class="contact-form__submit-button" :disabled="sendStatus === 'sending'">
+      <span v-if="sendStatus !== 'sending'">Отправить сообщение</span>
+      <span v-else>Отправка...</span>
+    </button>
+  </form>
 </template>
 
-<style scoped lang="scss">
-.contact-section {
-  padding: 4rem 0;
-  background: rgba(15, 23, 42, 0.5);
-
-  &__form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-      gap: 0;
-    }
-  }
-
-
-  &__submit-button {
-    background: linear-gradient(45deg, #6366f1, #8b5cf6);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 0.75rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 100%;
-    margin-top: 1.8rem;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-    }
-
-    &:disabled,
-    &:disabled:hover {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-  }
-
-  .container {
-    max-width: 800px;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: white;
-  }
-
-  input,
-  textarea {
-    display: block;
-    width: 100%;
-    padding: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    margin-bottom: 1.5rem;
-  }
-
-  input:focus,
-  textarea:focus {
-    outline: none;
-    border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-  }
-
-  input::placeholder,
-  textarea::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-}
-</style>

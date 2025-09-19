@@ -53,7 +53,7 @@ const experiences: JobExperience[] = [
 <template>
   <div class="home">
     <section class="container hero">
-      <div class="hero-content">
+      <div class="container hero-content">
         <h1 class="hero-title">
           Привет, я <span class="gradient-text">Кирилл Мазурек</span>
         </h1>
@@ -82,7 +82,10 @@ const experiences: JobExperience[] = [
       <TheTimeline :experiences="experiences" />
     </section>
 
-    <ContactForm />
+    <section class="container">
+      <h2 class="section-title">Свяжитесь со мной</h2>
+      <ContactForm />
+    </section>
   </div>
 </template>
 
@@ -96,7 +99,8 @@ const experiences: JobExperience[] = [
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 4rem);
+  margin-top: 0;
 }
 
 .hero-content {
