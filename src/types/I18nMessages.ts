@@ -1,7 +1,8 @@
 export interface LanguageMessages {
   home: {
     hero: {
-      name: string
+      greeting: string;
+      name: string;
 
     }
   }
