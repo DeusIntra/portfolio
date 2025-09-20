@@ -6,8 +6,9 @@ import ContactForm from '@/components/ContactForm.vue'
 import type { JobExperience } from '@/types/JobExperience'
 import TechStack from '@/components/TechStack.vue'
 import { useI18n } from 'vue-i18n'
+import type { I18nMessages } from '@/types/I18nMessages'
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 function diffsInYears(date1: Date, date2: Date): number {
   const ageDifMs = date2.getTime() - date1.getTime();
@@ -20,19 +21,17 @@ function calculateAge(birthday: Date): number {
   return diffsInYears(new Date(), birthday)
 }
 
-console.log(t)
+function tHero(s: keyof I18nMessages['home']['hero']) { return t(`home.hero.${s}`) }
 
-const json = [
+const codeLines = ref([
   'const developer = {',
-  `  name: "${t('home.hero.name')}",`,
+  `  name: "${tHero('name')}",`,
   `  age: ${calculateAge(birthday)},`,
   '  role: "Fullstack Developer",',
   '  skills: ["Vue", "React", "Node.js", "TypeScript"],',
   '  location: "Тюмень, Россия"',
   '};'
-]
-console.log(json)
-const codeLines = ref(json)
+])
 
 const experiences: JobExperience[] = [
   {
@@ -61,20 +60,16 @@ const experiences: JobExperience[] = [
     <section class="container hero">
       <div class="container hero-content">
         <h1 class="hero-title">
-          {{ t('home.hero.greeting') }}
+          {{ tHero('greeting') }} <span class="gradient-text">{{ tHero('name') }}</span>
         </h1>
-        <p class="hero-subtitle">Fullstack разработчик с 6+ годами опыта</p>
-        <p class="hero-description">
-          Создаю современные веб-приложения с использованием Vue, React, Node.js и других технологий.
-          Готов к реализации ваших проектов!
-        </p>
+        <p class="hero-subtitle">{{ tHero('fullstack') }}</p>
+        <p class="hero-description">{{ tHero('create') }}</p>
         <div class="hero-actions">
-          <a href="#contact" class="primary-button">Связаться</a>
-          <router-link to="/about" class="secondary-button">Узнать больше</router-link>
+          <a href="#contact" class="primary-button">{{ tHero('contact') }}</a>
         </div>
       </div>
       <div class="hero-visual">
-        <CodeTerminal :lines="codeLines" :delay="800" />
+        <CodeTerminal :lines="codeLines" :delay="800" :key="locale" />
       </div>
     </section>
 
