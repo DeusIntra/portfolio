@@ -5,7 +5,9 @@ import TheTimeline from '@/components/TheTimeline.vue'
 import ContactForm from '@/components/ContactForm.vue'
 import type { JobExperience } from '@/types/JobExperience'
 import TechStack from '@/components/TechStack.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n();
 
 function diffsInYears(date1: Date, date2: Date): number {
   const ageDifMs = date2.getTime() - date1.getTime();
@@ -18,15 +20,19 @@ function calculateAge(birthday: Date): number {
   return diffsInYears(new Date(), birthday)
 }
 
-const codeLines = ref([
+console.log(t)
+
+const json = [
   'const developer = {',
-  '  name: "Кирилл Мазурек",',
+  `  name: "${t('home.hero.name')}",`,
   `  age: ${calculateAge(birthday)},`,
   '  role: "Fullstack Developer",',
   '  skills: ["Vue", "React", "Node.js", "TypeScript"],',
   '  location: "Тюмень, Россия"',
   '};'
-])
+]
+console.log(json)
+const codeLines = ref(json)
 
 const experiences: JobExperience[] = [
   {
@@ -55,7 +61,7 @@ const experiences: JobExperience[] = [
     <section class="container hero">
       <div class="container hero-content">
         <h1 class="hero-title">
-          Привет, я <span class="gradient-text">Кирилл Мазурек</span>
+          {{ t('home.hero.greeting') }}
         </h1>
         <p class="hero-subtitle">Fullstack разработчик с 6+ годами опыта</p>
         <p class="hero-description">
