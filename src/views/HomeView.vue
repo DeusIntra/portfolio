@@ -22,14 +22,15 @@ function calculateAge(birthday: Date): number {
 }
 
 function tHero(s: keyof I18nMessages['home']['hero']) { return t(`home.hero.${s}`) }
+function tStack(s: keyof I18nMessages['home']['techStack']) { return t(`home.techStack.${s}`) }
 
 const codeLines = ref([
   'const developer = {',
   `  name: "${tHero('name')}",`,
   `  age: ${calculateAge(birthday)},`,
-  '  role: "Fullstack Developer",',
+  `  role: "${tHero('role')}",`,
   '  skills: ["Vue", "React", "Node.js", "TypeScript"],',
-  '  location: "Тюмень, Россия"',
+  `  location: "${tHero('location')}"`,
   '};'
 ])
 
@@ -74,7 +75,7 @@ const experiences: JobExperience[] = [
     </section>
 
     <section class="container">
-      <h2 class="section-title">Мой стек</h2>
+      <h2 class="section-title">{{ tStack('title') }}</h2>
       <TechStack />
     </section>
 

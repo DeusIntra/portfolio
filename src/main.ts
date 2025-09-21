@@ -11,8 +11,8 @@ import en from './localization/en'
 
 const i18n = createI18n({
   legacy: false,
-  locale: 'en',
-  fallbackLocale: 'ru',
+  locale: 'ru',
+  fallbackLocale: 'en',
   messages: {
     ru: { ...ru },
     en: { ...en },
