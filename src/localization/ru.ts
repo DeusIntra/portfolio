@@ -51,6 +51,17 @@ const ru: I18nMessages = {
           description: 'Проводил занятия в группах по 8-10 детей от 8 до 17 лет'
         }
       }
+    },
+    contactForm: {
+      title: "Свяжитесь со мной",
+      name: "Имя",
+      namePlaceholder: "Ваше имя",
+      subject: "Тема",
+      subjectPlaceholder: "Тема сообщения",
+      message: "Сообщение",
+      messagePlaceholder: "Ваше сообщение...",
+      send: "Отправить",
+      sending: "Отправка..."
     }
   }
 }

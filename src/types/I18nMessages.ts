@@ -35,7 +35,18 @@ export interface I18nMessages {
         "0": JobExperience,
         "1": JobExperience,
         "2": JobExperience,
-      }
+      };
+    };
+    contactForm: {
+      title: string;
+      name: string;
+      namePlaceholder: string;
+      subject: string;
+      subjectPlaceholder: string;
+      message: string;
+      messagePlaceholder: string;
+      send: string;
+      sending: string;
     }
   };
 }

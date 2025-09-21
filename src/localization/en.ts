@@ -51,6 +51,17 @@ const en: I18nMessages = {
           description: 'Conducted classes in groups of 8-10 children from 8 to 17 years old'
         }
       }
+    },
+    contactForm: {
+      title: "Contact me",
+      name: "Name",
+      namePlaceholder: "Your name",
+      subject: "Subject",
+      subjectPlaceholder: "Message subject",
+      message: "Message",
+      messagePlaceholder: "Your message...",
+      send: "Send",
+      sending: "Sending..."
     }
   }
 }

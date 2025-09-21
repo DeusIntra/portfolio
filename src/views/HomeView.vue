@@ -33,6 +33,7 @@ function tGetExperience(s: number) {
   }
   return experience
 }
+function tContact(s: keyof I18nMessages['home']['contactForm']) { return t(`home.contactForm.${s}`)}
 
 const codeLines = ref([
   'const developer = {',
@@ -81,7 +82,7 @@ const experiences = computed<JobExperience[]>(
     </section>
 
     <section class="container">
-      <h2 class="section-title">Свяжитесь со мной</h2>
+      <h2 class="section-title">{{ tContact('title') }}</h2>
       <ContactForm />
     </section>
   </div>
