@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import CodeTerminal from '@/components/CodeTerminal.vue'
 import TheTimeline from '@/components/TheTimeline.vue'
 import ContactForm from '@/components/ContactForm.vue'
@@ -23,6 +23,16 @@ function calculateAge(birthday: Date): number {
 
 function tHero(s: keyof I18nMessages['home']['hero']) { return t(`home.hero.${s}`) }
 function tStack(s: keyof I18nMessages['home']['techStack']) { return t(`home.techStack.${s}`) }
+function tJobExperiences(s: keyof I18nMessages['home']['jobExperiences']) { return t(`home.jobExperiences.${s}`) }
+function tGetExperience(s: number) {
+  const experience: JobExperience = {
+    position: t(`home.jobExperiences.experiences.${s}.position`),
+    period: t(`home.jobExperiences.experiences.${s}.period`),
+    company: t(`home.jobExperiences.experiences.${s}.company`),
+    description: t(`home.jobExperiences.experiences.${s}.description`),
+  }
+  return experience
+}
 
 const codeLines = ref([
   'const developer = {',
@@ -34,26 +44,12 @@ const codeLines = ref([
   '};'
 ])
 
-const experiences: JobExperience[] = [
-  {
-    position: 'Frontend-разработчик',
-    company: 'ООО "Медиа Инстанс"',
-    period: 'Апрель 2024 — настоящее время',
-    description: 'Разработка фронтендной части веб-приложений, встраиваемых в систему Битрикс24 и их поддержка'
-  },
-  {
-    position: 'Веб-разработчик',
-    company: 'ООО "ЦКС"',
-    period: 'Май 2021 — Апрель 2024',
-    description: 'Разработка сайта, поддержка сайта, деплой'
-  },
-  {
-    position: 'Преподаватель Roblx, Unity, C#',
-    company: 'Школа программирования Coddy',
-    period: 'Сентябрь 2018 — Июль 2020',
-    description: 'Проводил занятия в группах по 8-10 детей от 8 до 17 лет'
-  }
-]
+const experiences = computed<JobExperience[]>(
+  () => new Array(3)
+    .fill(undefined)
+    .map((_, index) => tGetExperience(index))
+)
+
 </script>
 
 <template>
@@ -80,7 +76,7 @@ const experiences: JobExperience[] = [
     </section>
 
     <section class="container">
-      <h2 class="section-title">Опыт работы</h2>
+      <h2 class="section-title">{{ tJobExperiences('title') }}</h2>
       <TheTimeline :experiences="experiences" />
     </section>
 

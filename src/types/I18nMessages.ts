@@ -1,3 +1,5 @@
+import type { JobExperience } from "./JobExperience";
+
 export interface I18nMessages {
   home: {
     header: {
@@ -27,9 +29,14 @@ export interface I18nMessages {
       postgresql: string;
       python: string;
     };
+    jobExperiences: {
+      title: string;
+      experiences: {
+        "0": JobExperience,
+        "1": JobExperience,
+        "2": JobExperience,
+      }
+    }
   };
-  // location: string;
-  // jobExperiences: {
-  //
-  // }
 }
+

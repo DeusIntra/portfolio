@@ -28,6 +28,29 @@ const en: I18nMessages = {
       php: "Most used server language",
       postgresql: "Relational database",
       python: "Universal language",
+    },
+    jobExperiences: {
+      title: "Job Experiences",
+      experiences: {
+        0: {
+          position: 'Frontend-developer',
+          company: 'LLC Media Instance',
+          period: 'April 2024 – present',
+          description: 'Development of front-end components for web applications integrated into the Bitrix24 system and their support'
+        },
+        1: {
+          position: 'Web-Developer',
+          company: 'LLC "CKS"',
+          period: 'May 2021 — April 2024',
+          description: 'Website development, website support, deployment'
+        },
+        2: {
+          position: 'Roblx, Unity and C# teacher',
+          company: 'School of programming "Coddy"',
+          period: 'September 2018 — July 2020',
+          description: 'Conducted classes in groups of 8-10 children from 8 to 17 years old'
+        }
+      }
     }
   }
 }
