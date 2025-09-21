@@ -4,7 +4,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 
-const { t, locale, availableLocales } = useI18n()
+const { t } = useI18n()
 
 const scrolled = ref(false)
 const mobileMenuOpen = ref(false)
@@ -31,10 +31,6 @@ function toggleMobileMenu() {
 
 function closeMobileMenu() {
   mobileMenuOpen.value = false
-}
-
-function switchLanguage(lang: string) {
-  locale.value = lang
 }
 
 onMounted(() => {
@@ -69,12 +65,6 @@ onUnmounted(() => {
       </nav>
 
       <div class="header__actions" v-if="!isMobile">
-        <div class="header__language-switcher">
-          <button v-for="lang in availableLocales" :key="lang" @click="switchLanguage(lang)"
-            :class="['header__language-btn', { 'header__language-btn--active': locale === lang }]">
-            {{ lang.toUpperCase() }}
-          </button>
-        </div>
         <a href="#contact" class="header__contact-button">{{ tHeader('contact') }}</a>
       </div>
     </div>

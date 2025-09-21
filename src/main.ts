@@ -9,9 +9,11 @@ import ru from './localization/ru'
 import en from './localization/en'
 
 
+const browserLanguage = window.navigator.language.slice(0, 2)
+
 const i18n = createI18n({
   legacy: false,
-  locale: 'ru',
+  locale: browserLanguage,
   fallbackLocale: 'en',
   messages: {
     ru: { ...ru },
