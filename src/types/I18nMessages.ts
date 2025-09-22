@@ -11,6 +11,7 @@ export interface I18nMessages {
       greeting: string;
       name: string;
       fullstack: string;
+      fullstackAfter: string;
       create: string;
       contact: string;
       role: string;

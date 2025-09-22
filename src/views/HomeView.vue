@@ -16,10 +16,10 @@ function diffsInYears(date1: Date, date2: Date): number {
   return 1970 - ageDate.getUTCFullYear() - 1;
 }
 
+const today = new Date();
 const birthday = new Date(1996, 3, 13)
-function calculateAge(birthday: Date): number {
-  return diffsInYears(new Date(), birthday)
-}
+const age = diffsInYears(today, birthday)
+const experience = diffsInYears(today, new Date(2020, 0, 1))
 
 function tHero(s: keyof I18nMessages['home']['hero']) { return t(`home.hero.${s}`) }
 function tStack(s: keyof I18nMessages['home']['techStack']) { return t(`home.techStack.${s}`) }
@@ -38,7 +38,7 @@ function tContact(s: keyof I18nMessages['home']['contactForm']) { return t(`home
 const codeLines = ref([
   'const developer = {',
   `  name: "${tHero('name')}",`,
-  `  age: ${calculateAge(birthday)},`,
+  `  age: ${age},`,
   `  role: "${tHero('role')}",`,
   '  skills: ["Vue", "React", "Node.js", "TypeScript"],',
   `  location: "${tHero('location')}"`,
@@ -60,7 +60,7 @@ const experiences = computed<JobExperience[]>(
         <h1 class="hero-title">
           {{ tHero('greeting') }} <span class="gradient-text">{{ tHero('name') }}</span>
         </h1>
-        <p class="hero-subtitle">{{ tHero('fullstack') }}</p>
+        <p class="hero-subtitle">{{ tHero('fullstack') }} {{experience}}+ {{tHero('fullstackAfter')}}</p>
         <p class="hero-description">{{ tHero('create') }}</p>
         <div class="hero-actions">
           <a href="#contact" class="button button--primary button--hover">{{ tHero('contact') }}</a>
