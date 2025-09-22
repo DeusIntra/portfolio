@@ -65,7 +65,7 @@ onUnmounted(() => {
       </nav>
 
       <div class="header__actions" v-if="!isMobile">
-        <a href="#contact" class="header__contact-button">{{ tHeader('contact') }}</a>
+        <a href="#contact" class="button-sm button--primary">{{ tHeader('contact') }}</a>
       </div>
     </div>
   </header>

@@ -63,7 +63,7 @@ const experiences = computed<JobExperience[]>(
         <p class="hero-subtitle">{{ tHero('fullstack') }}</p>
         <p class="hero-description">{{ tHero('create') }}</p>
         <div class="hero-actions">
-          <a href="#contact" class="primary-button">{{ tHero('contact') }}</a>
+          <a href="#contact" class="button button--primary button--hover">{{ tHero('contact') }}</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -154,36 +154,6 @@ const experiences = computed<JobExperience[]>(
   gap: 1rem;
 }
 
-.primary-button {
-  background: linear-gradient(45deg, #6366f1, #8b5cf6);
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.primary-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-}
-
-.secondary-button {
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.secondary-button:hover {
-  border-color: #6366f1;
-  background: rgba(99, 102, 241, 0.1);
-}
-
 .hero-visual {
   position: relative;
 }
@@ -218,12 +188,6 @@ const experiences = computed<JobExperience[]>(
   .hero-actions {
     flex-direction: column;
     align-items: center;
-  }
-
-  .primary-button,
-  .secondary-button {
-    width: 100%;
-    max-width: 250px;
   }
 }
 </style>
