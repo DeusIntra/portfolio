@@ -19,7 +19,7 @@ function diffsInYears(date1: Date, date2: Date): number {
 const today = new Date();
 const birthday = new Date(1996, 3, 13)
 const age = diffsInYears(today, birthday)
-const experience = diffsInYears(today, new Date(2020, 0, 1))
+const experience = diffsInYears(today, new Date(2021, 4, 1))
 
 function tHero(s: keyof I18nMessages['home']['hero']) { return t(`home.hero.${s}`) }
 function tStack(s: keyof I18nMessages['home']['techStack']) { return t(`home.techStack.${s}`) }
