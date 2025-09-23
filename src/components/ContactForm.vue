@@ -58,7 +58,7 @@ async function handleSubmit() {
     <input id="subject" v-model="form.subject" type="text" required :placeholder="tContact('subjectPlaceholder')">
     <label for="message">{{ tContact('message') }} *</label>
     <textarea id="message" v-model="form.message" rows="5" required :placeholder="tContact('messagePlaceholder')"></textarea>
-    <button type="submit" class="button button--primary button--hover block" :disabled="sendStatus === 'sending'">
+    <button type="submit" class="button button--primary button--hover block mt-6" :disabled="sendStatus === 'sending'">
       <span v-if="sendStatus !== 'sending'">{{ tContact('send') }}</span>
       <span v-else>{{ tContact('sending') }}</span>
     </button>
