@@ -3,6 +3,7 @@
   border-radius: 0.75rem;
   font-size: 1.1rem;
   width: 100%;
+  max-width: none;
   margin-top: 1.8rem;
 }
 
@@ -26,10 +27,6 @@
     box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
   }
 
-  &.block {
-    @extend %block;
-  }
-
   &-sm {
     @extend .button;
     padding: 0.5rem 1.5rem;
@@ -47,6 +44,11 @@
   &--hover:hover {
     transform: translateY(-2px);
   }
+
+  &.block {
+    @extend %block;
+  }
+
 }
 
 .secondary-button {
