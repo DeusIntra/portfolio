@@ -1,7 +1,7 @@
 export interface JobExperience {
-  position: string
-  company: string
-  period: string
-  description: string
+  position: string;
+  company: string;
+  period: string;
+  description: string;
+  moreInfo?: string;
 }
-
