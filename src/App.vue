@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import TheHeader from './components/TheHeader.vue'
-import AnimatedBackground from './components/AnimatedBackground.vue'
+import TheHeader from "./components/TheHeader.vue";
+import AnimatedBackground from "./components/AnimatedBackground.vue";
 </script>
 
 <template>

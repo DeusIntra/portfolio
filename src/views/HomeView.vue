@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import CodeTerminal from '@/components/CodeTerminal.vue'
-import TheTimeline from '@/components/TheTimeline.vue'
-import ContactForm from '@/components/ContactForm.vue'
-import type { JobExperience } from '@/types/JobExperience'
-import TechStack from '@/components/TechStack.vue'
-import { useI18n } from 'vue-i18n'
-import type { I18nMessages } from '@/types/I18nMessages'
+import { computed, ref } from "vue";
+import CodeTerminal from "@/components/CodeTerminal.vue";
+import TheTimeline from "@/components/TheTimeline.vue";
+import ContactForm from "@/components/ContactForm.vue";
+import type { JobExperience } from "@/types/JobExperience";
+import TechStack from "@/components/TechStack.vue";
+import { useI18n } from "vue-i18n";
+import type { I18nMessages } from "@/types/I18nMessages";
 
 const { t, locale } = useI18n();
 
@@ -17,40 +17,45 @@ function diffsInYears(date1: Date, date2: Date): number {
 }
 
 const today = new Date();
-const birthday = new Date(1996, 3, 13)
-const age = diffsInYears(today, birthday)
-const experience = diffsInYears(today, new Date(2021, 4, 1))
+const birthday = new Date(1996, 3, 13);
+const age = diffsInYears(today, birthday);
+const experience = diffsInYears(today, new Date(2021, 4, 1));
 
-function tHero(s: keyof I18nMessages['home']['hero']) { return t(`home.hero.${s}`) }
-function tStack(s: keyof I18nMessages['home']['techStack']) { return t(`home.techStack.${s}`) }
-function tJobExperiences(s: keyof I18nMessages['home']['jobExperiences']) { return t(`home.jobExperiences.${s}`) }
+function tHero(s: keyof I18nMessages["home"]["hero"]) {
+  return t(`home.hero.${s}`);
+}
+function tStack(s: keyof I18nMessages["home"]["techStack"]) {
+  return t(`home.techStack.${s}`);
+}
+function tJobExperiences(s: keyof I18nMessages["home"]["jobExperiences"]) {
+  return t(`home.jobExperiences.${s}`);
+}
 function tGetExperience(s: number) {
   const experience: JobExperience = {
     position: t(`home.jobExperiences.experiences.${s}.position`),
     period: t(`home.jobExperiences.experiences.${s}.period`),
     company: t(`home.jobExperiences.experiences.${s}.company`),
     description: t(`home.jobExperiences.experiences.${s}.description`),
-  }
-  return experience
+  };
+  return experience;
 }
-function tContact(s: keyof I18nMessages['home']['contactForm']) { return t(`home.contactForm.${s}`)}
+function tContact(s: keyof I18nMessages["home"]["contactForm"]) {
+  return t(`home.contactForm.${s}`);
+}
 
 const codeLines = ref([
-  'const developer = {',
-  `  name: "${tHero('name')}",`,
+  "const developer = {",
+  `  name: "${tHero("name")}",`,
   `  age: ${age},`,
-  `  role: "${tHero('role')}",`,
+  `  role: "${tHero("role")}",`,
   '  skills: ["Vue", "React", "Node.js", "TypeScript"],',
-  `  location: "${tHero('location')}"`,
-  '};'
-])
+  `  location: "${tHero("location")}"`,
+  "};",
+]);
 
-const experiences = computed<JobExperience[]>(
-  () => new Array(3)
-    .fill(undefined)
-    .map((_, index) => tGetExperience(index))
-)
-
+const experiences = computed<JobExperience[]>(() =>
+  new Array(3).fill(undefined).map((_, index) => tGetExperience(index)),
+);
 </script>
 
 <template>
@@ -58,12 +63,14 @@ const experiences = computed<JobExperience[]>(
     <section class="container hero">
       <div class="container hero-content">
         <h1 class="hero-title">
-          {{ tHero('greeting') }} <span class="gradient-text">{{ tHero('name') }}</span>
+          {{ tHero("greeting") }} <span class="gradient-text">{{ tHero("name") }}</span>
         </h1>
-        <p class="hero-subtitle">{{ tHero('fullstack') }} {{experience}}+ {{tHero('fullstackAfter')}}</p>
-        <p class="hero-description">{{ tHero('create') }}</p>
+        <p class="hero-subtitle">
+          {{ tHero("fullstack") }} {{ experience }}+ {{ tHero("fullstackAfter") }}
+        </p>
+        <p class="hero-description">{{ tHero("create") }}</p>
         <div class="hero-actions">
-          <a href="#contact" class="button button--primary button--hover">{{ tHero('contact') }}</a>
+          <a href="#contact" class="button button--primary button--hover">{{ tHero("contact") }}</a>
         </div>
       </div>
       <div class="hero-visual">
@@ -72,17 +79,17 @@ const experiences = computed<JobExperience[]>(
     </section>
 
     <section class="container">
-      <h2 class="section-title">{{ tStack('title') }}</h2>
+      <h2 class="section-title">{{ tStack("title") }}</h2>
       <TechStack />
     </section>
 
     <section class="container">
-      <h2 class="section-title">{{ tJobExperiences('title') }}</h2>
+      <h2 class="section-title">{{ tJobExperiences("title") }}</h2>
       <TheTimeline :experiences="experiences" />
     </section>
 
     <section class="container">
-      <h2 class="section-title">{{ tContact('title') }}</h2>
+      <h2 class="section-title">{{ tContact("title") }}</h2>
       <ContactForm />
     </section>
   </div>

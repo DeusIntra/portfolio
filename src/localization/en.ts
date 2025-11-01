@@ -12,7 +12,8 @@ const en: I18nMessages = {
       name: "Kirill Mazurek",
       fullstack: "Full-stack developer with",
       fullstackAfter: "years of experience",
-      create: "I create modern web applications using Vue, React, Node.js, and other technologies. Ready to bring your projects to life!",
+      create:
+        "I create modern web applications using Vue, React, Node.js, and other technologies. Ready to bring your projects to life!",
       contact: "Contact",
       role: "Fullstack Developer",
       location: "Tyumen, Russia",
@@ -34,24 +35,25 @@ const en: I18nMessages = {
       title: "Job Experiences",
       experiences: {
         0: {
-          position: 'Frontend-developer',
-          company: 'LLC Media Instance',
-          period: 'April 2024 – present',
-          description: 'Development of front-end components for web applications integrated into the Bitrix24 system and their support'
+          position: "Frontend-developer",
+          company: "LLC Media Instance",
+          period: "April 2024 – present",
+          description:
+            "Development of front-end components for web applications integrated into the Bitrix24 system and their support",
         },
         1: {
-          position: 'Web-Developer',
+          position: "Web-Developer",
           company: 'LLC "CKS"',
-          period: 'May 2021 — April 2024',
-          description: 'Website development, website support, deployment'
+          period: "May 2021 — April 2024",
+          description: "Website development, website support, deployment",
         },
         2: {
-          position: 'Roblx, Unity and C# teacher',
+          position: "Roblx, Unity and C# teacher",
           company: 'School of programming "Coddy"',
-          period: 'September 2018 — July 2020',
-          description: 'Conducted classes in groups of 8-10 children from 8 to 17 years old'
-        }
-      }
+          period: "September 2018 — July 2020",
+          description: "Conducted classes in groups of 8-10 children from 8 to 17 years old",
+        },
+      },
     },
     contactForm: {
       title: "Contact me",
@@ -62,9 +64,9 @@ const en: I18nMessages = {
       message: "Message",
       messagePlaceholder: "Your message...",
       send: "Send",
-      sending: "Sending..."
-    }
-  }
-}
+      sending: "Sending...",
+    },
+  },
+};
 
 export default en;

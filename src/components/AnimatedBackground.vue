@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted } from "vue";
 
 onMounted(() => {
-  const shapes = document.querySelectorAll<HTMLElement>('.floating-shape')
+  const shapes = document.querySelectorAll<HTMLElement>(".floating-shape");
   shapes.forEach((shape, index) => {
-    const delay = index * 0.7
-    const duration = 3 + Math.random() * 2
-    shape.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`
-  })
-})
+    const delay = index * 0.7;
+    const duration = 3 + Math.random() * 2;
+    shape.style.animation = `float ${duration}s ease-in-out ${delay}s infinite alternate`;
+  });
+});
 </script>
 
 <template>

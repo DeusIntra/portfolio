@@ -1,30 +1,25 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
 
-import './assets/main.scss'
+import "./assets/main.scss";
 
-import { createI18n } from 'vue-i18n'
-import ru from './localization/ru'
-import en from './localization/en'
+import { createI18n } from "vue-i18n";
+import ru from "./localization/ru";
+import en from "./localization/en";
 
-
-const browserLanguage = window.navigator.language.slice(0, 2)
+const browserLanguage = window.navigator.language.slice(0, 2);
 
 const i18n = createI18n({
   legacy: false,
   locale: browserLanguage,
-  fallbackLocale: 'en',
+  fallbackLocale: "en",
   messages: {
     ru: { ...ru },
     en: { ...en },
-  }
-})
+  },
+});
 
-const app = createApp(App)
+const app = createApp(App);
 
-app
-  .use(router)
-  .use(i18n)
-  .mount('#app')
-
+app.use(router).use(i18n).mount("#app");

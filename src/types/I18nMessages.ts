@@ -33,9 +33,9 @@ export interface I18nMessages {
     jobExperiences: {
       title: string;
       experiences: {
-        "0": JobExperience,
-        "1": JobExperience,
-        "2": JobExperience,
+        "0": JobExperience;
+        "1": JobExperience;
+        "2": JobExperience;
       };
     };
     contactForm: {
@@ -48,7 +48,6 @@ export interface I18nMessages {
       messagePlaceholder: string;
       send: string;
       sending: string;
-    }
+    };
   };
 }
-
