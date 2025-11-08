@@ -14,7 +14,7 @@ const ru: I18nMessages = {
       fullstackAfter: "годами опыта",
       create:
         "Создаю современные веб-приложения с использованием Vue, React, Node.js и других технологий. Готов к реализации ваших проектов!",
-      contact: "Связавться",
+      contact: "Связаться",
       role: "Fullstack разработчик",
       location: "Тюмень, Россия",
     },

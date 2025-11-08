@@ -48,7 +48,7 @@ const codeLines = ref([
   `  name: "${tHero("name")}",`,
   `  age: ${age},`,
   `  role: "${tHero("role")}",`,
-  '  skills: ["Vue", "React", "Node.js", "TypeScript"],',
+  '  skills: ["Vue", "React", "Node.js", "TypeScript", "PHP"],',
   `  location: "${tHero("location")}"`,
   "};",
 ]);
